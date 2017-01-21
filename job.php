@@ -19,7 +19,7 @@ function loadUrlFromFile(string $name)
     $file = fopen($name, "rt");
     if (!$file) {
         return [];
-    }
+    } 
     
     for ($str = fgets($file); $str !== false; $str = fgets($file)) {
         $str = trim($str);
