@@ -9,6 +9,8 @@ class LogDB {
         $this->db = new SQLite3($dbName);
         $min = min(LogDBStatus::getConstList());
         $max = max(LogDBStatus::getConstList());
+        $this->db->querySingle("CREATE TABLE IF NOT EXISTS backup (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, time TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, status INTEGER NOT NULL CHECK(status >= $min AND status <= $max), file_path TEXT NOT NULL, message TEXT NOT NULL DEFAULT '')");
+
         $this->db->querySingle("CREATE TABLE IF NOT EXISTS repo (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, bakup_id INTEGER NOT NULL, url TEXT NOT NULL, status INTEGER NOT NULL CHECK(status >= $min AND status <= $max), message TEXT NOT NULL DEFAULT '')");
     }
     public function addEntry($fileName, LogDBStatus $status, $arrUrlList) {
